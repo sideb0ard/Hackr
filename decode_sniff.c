@@ -1,4 +1,6 @@
 #include <pcap.h>
+#include <string.h>
+#include <stdlib.h>
 #include "hacking.h"
 #include "hacking-network.h"
 
@@ -38,7 +40,7 @@ void caught_packet(u_char *user_args, const struct pcap_pkthdr *cap_header, cons
   printf("===== Got a %d byte packet =====\n", cap_header->len);
 
   decode_ethernet(packet);
-  decode_ip(packet+ETHR_HDR_LEN);
+  decode_ip(packet+ETHER_HDR_LEN);
   tcp_header_length = decode_tcp(packet+ETHER_HDR_LEN+sizeof(struct ip_hdr));
 
   total_header_size = ETHER_HDR_LEN+sizeof(struct ip_hdr)+tcp_header_length;
